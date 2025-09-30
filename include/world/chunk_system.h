@@ -9,8 +9,30 @@ typedef enum {
     VOXEL_AIR = 0,
     VOXEL_GRASS = 1,    // Pasto verde (suelo)
     VOXEL_WOOD = 2,     // Madera café (troncos)
-    VOXEL_LEAVES = 3    // Hojas verde oscuro (árboles)
+    VOXEL_LEAVES = 3,   // Hojas verde oscuro (árboles)
+    VOXEL_STONE = 4,    // Piedra gris
+    VOXEL_DIRT = 5,     // Tierra marrón
+    VOXEL_SAND = 6,     // Arena amarilla
+    VOXEL_WATER = 7,    // Agua azul
+    VOXEL_LAVA = 8,     // Lava roja
+    VOXEL_IRON = 9,     // Hierro gris oscuro
+    VOXEL_GOLD = 10,    // Oro amarillo
+    VOXEL_DIAMOND = 11, // Diamante azul claro
+    VOXEL_COAL = 12,    // Carbón negro
+    VOXEL_GLASS = 13,   // Vidrio transparente
+    VOXEL_BRICK = 14,   // Ladrillo rojo
+    VOXEL_CONCRETE = 15 // Concreto gris
 } VoxelType;
+
+// 3D Matrix for block map - each position stores block type as integer
+typedef struct {
+    int*** blocks;      // 3D array: blocks[x][y][z] = block_type
+    int width;          // Width of the world (X axis)
+    int height;         // Height of the world (Y axis) 
+    int depth;          // Depth of the world (Z axis)
+    int chunkSize;      // Size of each chunk (16x16x16)
+    BOOL isInitialized; // Whether the matrix is initialized
+} BlockMatrix3D;
 
 // Block blueprint - defines properties of each block type
 typedef struct {
@@ -46,6 +68,7 @@ typedef struct {
     VoxelBlock blocks[16][16][16];  // 16x16x16 voxel grid
     BOOL isGenerated;
     BOOL isVisible;
+    BOOL needsRemesh;  // Flag to mark chunk for mesh regeneration
     float distanceToCamera;
 } VoxelChunk;
 
@@ -105,9 +128,10 @@ typedef struct {
 
 // Tree generation functions
 TreeGenerator create_tree_generator(int seed);
-Tree generate_tree_at_position(int x, int y, int z, TreeGenerator* generator);
-void place_tree_in_chunk(VoxelChunk* chunk, Tree* tree);
 BOOL should_generate_tree_at(int x, int y, int z, TreeGenerator* generator);
+Tree generate_tree_at_position(int x, int y, int z, TreeGenerator* generator);
+BOOL can_tree_fit_in_chunk(Tree* tree, VoxelChunk* chunk);
+void place_tree_in_chunk(VoxelChunk* chunk, Tree* tree);
 
 // Block blueprint system
 BlockBlueprint* create_block_blueprints();
@@ -153,5 +177,15 @@ void save_world_data(TerrainGenerator* generator, const char* filename);
 BOOL load_world_data(TerrainGenerator* generator, const char* filename);
 void delete_world_data(const char* filename);
 void destroy_terrain_generator(TerrainGenerator* generator);
+
+// 3D Matrix block system
+BlockMatrix3D* create_block_matrix_3d(int width, int height, int depth, int chunkSize);
+void destroy_block_matrix_3d(BlockMatrix3D* matrix);
+int get_block_at(BlockMatrix3D* matrix, int x, int y, int z);
+void set_block_at(BlockMatrix3D* matrix, int x, int y, int z, int blockType);
+BOOL is_valid_position(BlockMatrix3D* matrix, int x, int y, int z);
+BOOL is_solid_block(int blockType);
+void render_terrain_from_matrix(BlockMatrix3D* matrix, int startX, int startY, int startZ, int endX, int endY, int endZ);
+void regenerate_terrain_below(BlockMatrix3D* matrix, int x, int y, int z);
 
 #endif // CHUNK_SYSTEM_H

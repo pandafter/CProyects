@@ -60,6 +60,7 @@ void handle_mouse_input(int deltaX, int deltaY);
 void handle_keyboard_input(WPARAM wParam);
 void handle_keyboard_input_up(WPARAM wParam);
 void update_movement_from_keys();
+void test_all_functionalities();
 
 // Game update
 void update_game(float deltaTime);

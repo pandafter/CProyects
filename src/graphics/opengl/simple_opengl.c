@@ -410,8 +410,8 @@ void render_simple_opengl_scene(SimpleOpenGLCamera camera, SimpleOpenGLCube* cub
     (void)cubes; // Suppress unused parameter warning
     (void)cubeCount; // Suppress unused parameter warning
     (void)fog; // Suppress unused parameter warning
-    // Clear buffers with realistic sky blue
-    glClearColor(0.4f, 0.6f, 1.0f, 1.0f); // Bright sky blue
+    // Clear buffers with enhanced sky blue
+    glClearColor(0.2f, 0.4f, 0.8f, 1.0f); // Enhanced sky blue
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     // Set up projection matrix

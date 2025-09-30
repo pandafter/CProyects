@@ -11,7 +11,7 @@ INCLUDE_DIR = include
 BUILD_DIR = build
 
 # Source files by category
-CORE_SOURCES = $(SRC_DIR)/core/memory.c $(SRC_DIR)/core/math3d.c
+CORE_SOURCES = $(SRC_DIR)/core/memory.c $(SRC_DIR)/core/math3d.c $(SRC_DIR)/core/input.c
 GRAPHICS_SOURCES = $(SRC_DIR)/graphics/renderer.c $(SRC_DIR)/graphics/window.c
 GRAPHICS_UI_SOURCES = $(SRC_DIR)/graphics/ui/menu.c
 GRAPHICS_OPENGL_SOURCES = $(SRC_DIR)/graphics/opengl/simple_opengl.c

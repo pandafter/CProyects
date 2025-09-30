@@ -132,6 +132,8 @@ static PFNGLUNIFORM1FPROC glUniform1f = NULL;
 
 // Initialize OpenGL function pointers
 static BOOL init_opengl_functions() {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wcast-function-type"
     glCreateShader = (PFNGLCREATESHADERPROC)wglGetProcAddress("glCreateShader");
     glCreateProgram = (PFNGLCREATEPROGRAMPROC)wglGetProcAddress("glCreateProgram");
     glShaderSource = (PFNGLSHADERSOURCEPROC)wglGetProcAddress("glShaderSource");
@@ -150,6 +152,7 @@ static BOOL init_opengl_functions() {
     glUniformMatrix3fv = (PFNGLUNIFORMMATRIX3FVPROC)wglGetProcAddress("glUniformMatrix3fv");
     glUniform3f = (PFNGLUNIFORM3FPROC)wglGetProcAddress("glUniform3f");
     glUniform1f = (PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f");
+#pragma GCC diagnostic pop
     
     return (glCreateShader && glCreateProgram && glShaderSource && glCompileShader &&
             glGetShaderiv && glGetShaderInfoLog && glAttachShader && glLinkProgram &&

@@ -1,5 +1,7 @@
+#include "world/chunk_system.h"  // Must be included before renderer.h
 #include "graphics/ui/menu.h"
 #include "graphics/window.h"
+#include "core/input.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -132,8 +134,8 @@ void MenuSystem_Show(MenuSystem* menu, MenuState state) {
     }
     
     // Show cursor and release mouse capture when menu is shown
-    ShowCursor(TRUE);
-    ReleaseCapture();
+    Input_ShowCursor(TRUE);
+    Input_LockCursor(menu->hwnd, FALSE);
     
     // Force cursor to be visible and set to arrow
     SetCursor(LoadCursor(NULL, IDC_ARROW));
@@ -150,21 +152,17 @@ void MenuSystem_Hide(MenuSystem* menu) {
     menu->isPaused = FALSE;
     
     // Hide cursor and re-capture mouse when returning to game
-    ShowCursor(FALSE);
+    Input_ShowCursor(FALSE);
+    Input_LockCursor(menu->hwnd, TRUE);
     
     // Update application state to game active
     set_app_state(APP_STATE_GAME_ACTIVE);
     
-    // Re-capture mouse and reset position
+    // Re-capture mouse (centering se hace automáticamente cada frame)
     GameState* gameState = get_game_state();
     if (gameState) {
-        SetCapture(menu->hwnd);
         gameState->mouseCaptured = TRUE;
-        SetCursorPos(gameState->centerX, gameState->centerY);
-        gameState->mouseX = gameState->centerX;
-        gameState->mouseY = gameState->centerY;
-        gameState->lastMouseX = gameState->centerX;
-        gameState->lastMouseY = gameState->centerY;
+        printf("Game resumed: Mouse captured (auto-centering enabled)\n");
     }
 }
 
@@ -221,11 +219,18 @@ void MenuSystem_HandleKeyPress(MenuSystem* menu, WPARAM wParam) {
     if (!menu) return;
     
     if (wParam == VK_ESCAPE) {
-        // Simple toggle - no complex logic
-        if (menu->isVisible) {
-            MenuSystem_Hide(menu);
-        } else {
-            MenuSystem_Show(menu, MENU_PAUSED);
+        // Simple toggle with debouncing to prevent flickering
+        static DWORD lastToggleTime = 0;
+        DWORD currentTime = GetTickCount();
+        
+        // Debounce: only allow toggle if 200ms have passed since last toggle
+        if (currentTime - lastToggleTime > 200) {
+            if (menu->isVisible) {
+                MenuSystem_Hide(menu);
+            } else {
+                MenuSystem_Show(menu, MENU_PAUSED);
+            }
+            lastToggleTime = currentTime;
         }
     }
 }

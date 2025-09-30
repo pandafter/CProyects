@@ -14,8 +14,8 @@ BlockBlueprint* create_block_blueprints() {
         return g_block_blueprints; // Already created
     }
     
-    // Allocate array for all block types - SIMPLIFICADO: Solo 4 tipos
-    g_block_blueprints = (BlockBlueprint*)safe_calloc(4, sizeof(BlockBlueprint)); // 4 block types
+    // Allocate array for all block types - Expandido: 16 tipos
+    g_block_blueprints = (BlockBlueprint*)safe_calloc(16, sizeof(BlockBlueprint)); // 16 block types
     if (!g_block_blueprints) return NULL;
     
     // Initialize each block type - SIMPLIFICADO: Solo 4 tipos básicos
@@ -67,7 +67,151 @@ BlockBlueprint* create_block_blueprints() {
     g_block_blueprints[VOXEL_LEAVES].friction = 0.3f;
     strcpy(g_block_blueprints[VOXEL_LEAVES].name, "Leaves");
     
-    printf("Block blueprints creados: %d tipos de bloques (simplificado)\n", 4);
+    // VOXEL_STONE - Piedra gris
+    g_block_blueprints[VOXEL_STONE].type = VOXEL_STONE;
+    g_block_blueprints[VOXEL_STONE].baseColor = (Color){128, 128, 128}; // Gris
+    g_block_blueprints[VOXEL_STONE].isSolid = TRUE;
+    g_block_blueprints[VOXEL_STONE].isTransparent = FALSE;
+    g_block_blueprints[VOXEL_STONE].durability = 30;
+    g_block_blueprints[VOXEL_STONE].hardness = 1.5f;
+    g_block_blueprints[VOXEL_STONE].isFlammable = FALSE;
+    g_block_blueprints[VOXEL_STONE].isGravityAffected = FALSE;
+    g_block_blueprints[VOXEL_STONE].friction = 0.8f;
+    strcpy(g_block_blueprints[VOXEL_STONE].name, "Stone");
+    
+    // VOXEL_DIRT - Tierra marrón
+    g_block_blueprints[VOXEL_DIRT].type = VOXEL_DIRT;
+    g_block_blueprints[VOXEL_DIRT].baseColor = (Color){139, 69, 19}; // Marrón
+    g_block_blueprints[VOXEL_DIRT].isSolid = TRUE;
+    g_block_blueprints[VOXEL_DIRT].isTransparent = FALSE;
+    g_block_blueprints[VOXEL_DIRT].durability = 2;
+    g_block_blueprints[VOXEL_DIRT].hardness = 0.2f;
+    g_block_blueprints[VOXEL_DIRT].isFlammable = FALSE;
+    g_block_blueprints[VOXEL_DIRT].isGravityAffected = FALSE;
+    g_block_blueprints[VOXEL_DIRT].friction = 0.6f;
+    strcpy(g_block_blueprints[VOXEL_DIRT].name, "Dirt");
+    
+    // VOXEL_SAND - Arena amarilla
+    g_block_blueprints[VOXEL_SAND].type = VOXEL_SAND;
+    g_block_blueprints[VOXEL_SAND].baseColor = (Color){238, 203, 173}; // Amarillo claro
+    g_block_blueprints[VOXEL_SAND].isSolid = TRUE;
+    g_block_blueprints[VOXEL_SAND].isTransparent = FALSE;
+    g_block_blueprints[VOXEL_SAND].durability = 1;
+    g_block_blueprints[VOXEL_SAND].hardness = 0.1f;
+    g_block_blueprints[VOXEL_SAND].isFlammable = FALSE;
+    g_block_blueprints[VOXEL_SAND].isGravityAffected = TRUE;
+    g_block_blueprints[VOXEL_SAND].friction = 0.4f;
+    strcpy(g_block_blueprints[VOXEL_SAND].name, "Sand");
+    
+    // VOXEL_WATER - Agua azul
+    g_block_blueprints[VOXEL_WATER].type = VOXEL_WATER;
+    g_block_blueprints[VOXEL_WATER].baseColor = (Color){0, 100, 200}; // Azul
+    g_block_blueprints[VOXEL_WATER].isSolid = FALSE;
+    g_block_blueprints[VOXEL_WATER].isTransparent = TRUE;
+    g_block_blueprints[VOXEL_WATER].durability = 0;
+    g_block_blueprints[VOXEL_WATER].hardness = 0.0f;
+    g_block_blueprints[VOXEL_WATER].isFlammable = FALSE;
+    g_block_blueprints[VOXEL_WATER].isGravityAffected = TRUE;
+    g_block_blueprints[VOXEL_WATER].friction = 0.1f;
+    strcpy(g_block_blueprints[VOXEL_WATER].name, "Water");
+    
+    // VOXEL_LAVA - Lava roja
+    g_block_blueprints[VOXEL_LAVA].type = VOXEL_LAVA;
+    g_block_blueprints[VOXEL_LAVA].baseColor = (Color){255, 100, 0}; // Rojo-naranja
+    g_block_blueprints[VOXEL_LAVA].isSolid = FALSE;
+    g_block_blueprints[VOXEL_LAVA].isTransparent = TRUE;
+    g_block_blueprints[VOXEL_LAVA].durability = 0;
+    g_block_blueprints[VOXEL_LAVA].hardness = 0.0f;
+    g_block_blueprints[VOXEL_LAVA].isFlammable = FALSE;
+    g_block_blueprints[VOXEL_LAVA].isGravityAffected = TRUE;
+    g_block_blueprints[VOXEL_LAVA].friction = 0.1f;
+    strcpy(g_block_blueprints[VOXEL_LAVA].name, "Lava");
+    
+    // VOXEL_IRON - Hierro gris oscuro
+    g_block_blueprints[VOXEL_IRON].type = VOXEL_IRON;
+    g_block_blueprints[VOXEL_IRON].baseColor = (Color){105, 105, 105}; // Gris oscuro
+    g_block_blueprints[VOXEL_IRON].isSolid = TRUE;
+    g_block_blueprints[VOXEL_IRON].isTransparent = FALSE;
+    g_block_blueprints[VOXEL_IRON].durability = 50;
+    g_block_blueprints[VOXEL_IRON].hardness = 3.0f;
+    g_block_blueprints[VOXEL_IRON].isFlammable = FALSE;
+    g_block_blueprints[VOXEL_IRON].isGravityAffected = FALSE;
+    g_block_blueprints[VOXEL_IRON].friction = 0.9f;
+    strcpy(g_block_blueprints[VOXEL_IRON].name, "Iron");
+    
+    // VOXEL_GOLD - Oro amarillo
+    g_block_blueprints[VOXEL_GOLD].type = VOXEL_GOLD;
+    g_block_blueprints[VOXEL_GOLD].baseColor = (Color){255, 215, 0}; // Dorado
+    g_block_blueprints[VOXEL_GOLD].isSolid = TRUE;
+    g_block_blueprints[VOXEL_GOLD].isTransparent = FALSE;
+    g_block_blueprints[VOXEL_GOLD].durability = 30;
+    g_block_blueprints[VOXEL_GOLD].hardness = 3.0f;
+    g_block_blueprints[VOXEL_GOLD].isFlammable = FALSE;
+    g_block_blueprints[VOXEL_GOLD].isGravityAffected = FALSE;
+    g_block_blueprints[VOXEL_GOLD].friction = 0.9f;
+    strcpy(g_block_blueprints[VOXEL_GOLD].name, "Gold");
+    
+    // VOXEL_DIAMOND - Diamante azul claro
+    g_block_blueprints[VOXEL_DIAMOND].type = VOXEL_DIAMOND;
+    g_block_blueprints[VOXEL_DIAMOND].baseColor = (Color){0, 191, 255}; // Azul claro
+    g_block_blueprints[VOXEL_DIAMOND].isSolid = TRUE;
+    g_block_blueprints[VOXEL_DIAMOND].isTransparent = FALSE;
+    g_block_blueprints[VOXEL_DIAMOND].durability = 100;
+    g_block_blueprints[VOXEL_DIAMOND].hardness = 5.0f;
+    g_block_blueprints[VOXEL_DIAMOND].isFlammable = FALSE;
+    g_block_blueprints[VOXEL_DIAMOND].isGravityAffected = FALSE;
+    g_block_blueprints[VOXEL_DIAMOND].friction = 0.9f;
+    strcpy(g_block_blueprints[VOXEL_DIAMOND].name, "Diamond");
+    
+    // VOXEL_COAL - Carbón negro
+    g_block_blueprints[VOXEL_COAL].type = VOXEL_COAL;
+    g_block_blueprints[VOXEL_COAL].baseColor = (Color){64, 64, 64}; // Negro
+    g_block_blueprints[VOXEL_COAL].isSolid = TRUE;
+    g_block_blueprints[VOXEL_COAL].isTransparent = FALSE;
+    g_block_blueprints[VOXEL_COAL].durability = 15;
+    g_block_blueprints[VOXEL_COAL].hardness = 1.0f;
+    g_block_blueprints[VOXEL_COAL].isFlammable = TRUE;
+    g_block_blueprints[VOXEL_COAL].isGravityAffected = FALSE;
+    g_block_blueprints[VOXEL_COAL].friction = 0.7f;
+    strcpy(g_block_blueprints[VOXEL_COAL].name, "Coal");
+    
+    // VOXEL_GLASS - Vidrio transparente
+    g_block_blueprints[VOXEL_GLASS].type = VOXEL_GLASS;
+    g_block_blueprints[VOXEL_GLASS].baseColor = (Color){200, 200, 255}; // Azul muy claro
+    g_block_blueprints[VOXEL_GLASS].isSolid = TRUE;
+    g_block_blueprints[VOXEL_GLASS].isTransparent = TRUE;
+    g_block_blueprints[VOXEL_GLASS].durability = 1;
+    g_block_blueprints[VOXEL_GLASS].hardness = 0.3f;
+    g_block_blueprints[VOXEL_GLASS].isFlammable = FALSE;
+    g_block_blueprints[VOXEL_GLASS].isGravityAffected = FALSE;
+    g_block_blueprints[VOXEL_GLASS].friction = 0.1f;
+    strcpy(g_block_blueprints[VOXEL_GLASS].name, "Glass");
+    
+    // VOXEL_BRICK - Ladrillo rojo
+    g_block_blueprints[VOXEL_BRICK].type = VOXEL_BRICK;
+    g_block_blueprints[VOXEL_BRICK].baseColor = (Color){178, 34, 34}; // Rojo
+    g_block_blueprints[VOXEL_BRICK].isSolid = TRUE;
+    g_block_blueprints[VOXEL_BRICK].isTransparent = FALSE;
+    g_block_blueprints[VOXEL_BRICK].durability = 20;
+    g_block_blueprints[VOXEL_BRICK].hardness = 1.0f;
+    g_block_blueprints[VOXEL_BRICK].isFlammable = FALSE;
+    g_block_blueprints[VOXEL_BRICK].isGravityAffected = FALSE;
+    g_block_blueprints[VOXEL_BRICK].friction = 0.8f;
+    strcpy(g_block_blueprints[VOXEL_BRICK].name, "Brick");
+    
+    // VOXEL_CONCRETE - Concreto gris
+    g_block_blueprints[VOXEL_CONCRETE].type = VOXEL_CONCRETE;
+    g_block_blueprints[VOXEL_CONCRETE].baseColor = (Color){169, 169, 169}; // Gris claro
+    g_block_blueprints[VOXEL_CONCRETE].isSolid = TRUE;
+    g_block_blueprints[VOXEL_CONCRETE].isTransparent = FALSE;
+    g_block_blueprints[VOXEL_CONCRETE].durability = 40;
+    g_block_blueprints[VOXEL_CONCRETE].hardness = 2.0f;
+    g_block_blueprints[VOXEL_CONCRETE].isFlammable = FALSE;
+    g_block_blueprints[VOXEL_CONCRETE].isGravityAffected = FALSE;
+    g_block_blueprints[VOXEL_CONCRETE].friction = 0.8f;
+    strcpy(g_block_blueprints[VOXEL_CONCRETE].name, "Concrete");
+    
+    printf("Block blueprints creados: %d tipos de bloques (expandido)\n", 16);
     return g_block_blueprints;
 }
 
@@ -422,7 +566,7 @@ void generate_chunk_terrain(VoxelChunk* chunk, TerrainGenerator* generator) {
         }
     }
     
-    // Generate trees in this chunk - ÁRBOLES CON FORMA DE MEDIA ESFERA
+    // Generate trees in this chunk - ÁRBOLES CON DIMENSIONES EXACTAS
     TreeGenerator treeGen = create_tree_generator(generator->seed);
     int treesGenerated = 0;
     
@@ -437,25 +581,30 @@ void generate_chunk_terrain(VoxelChunk* chunk, TerrainGenerator* generator) {
                 // Make sure there's solid grass at this position (z=0)
                 if (chunk->blocks[x][y][0].type == VOXEL_GRASS) {
                     Tree tree = generate_tree_at_position(x, y, 0, &treeGen);
-                    place_tree_in_chunk(chunk, &tree);
                     
-                    // AGREGAR ZONA SEGURA: Registrar posición del árbol
-                    int worldChunkX = chunk->chunkX * 16;
-                    int worldChunkY = chunk->chunkY * 16;
-                    int worldTreeX = worldChunkX + tree.x;
-                    int worldTreeY = worldChunkY + tree.y;
-                    int worldTreeZ = chunk->chunkZ * 16 + tree.z;
-                    
-                    // Usar radio de hojas como zona segura
-                    if (g_tree_count < 1000) {
-                        g_tree_positions[g_tree_count].x = worldTreeX;
-                        g_tree_positions[g_tree_count].y = worldTreeY;
-                        g_tree_positions[g_tree_count].z = worldTreeZ;
-                        g_tree_positions[g_tree_count].radius = tree.leafRadius;
-                        g_tree_count++;
+                    // Verificar que el árbol cabe completamente en el chunk
+                    if (can_tree_fit_in_chunk(&tree, chunk)) {
+                        place_tree_in_chunk(chunk, &tree);
+                        
+                        // Registrar posición del árbol para zona segura
+                        int worldTreeX = worldChunkX + tree.x;
+                        int worldTreeY = worldChunkY + tree.y;
+                        int worldTreeZ = chunk->chunkZ * 16 + tree.z;
+                        
+                        // Usar radio de hojas como zona segura
+                        if (g_tree_count < 1000) {
+                            g_tree_positions[g_tree_count].x = worldTreeX;
+                            g_tree_positions[g_tree_count].y = worldTreeY;
+                            g_tree_positions[g_tree_count].z = worldTreeZ;
+                            g_tree_positions[g_tree_count].radius = tree.leafRadius + 2; // Buffer adicional
+                            g_tree_count++;
+                        }
+                        
+                        treesGenerated++;
+                    } else {
+                        printf("Árbol omitido: no cabe en chunk (%d,%d,%d)\n", 
+                               chunk->chunkX, chunk->chunkY, chunk->chunkZ);
                     }
-                    
-                    treesGenerated++;
                 }
             }
         }
@@ -796,6 +945,196 @@ void destroy_terrain_generator(TerrainGenerator* generator) {
 }
 
 // ============================================================================
+// 3D MATRIX BLOCK SYSTEM - Matriz 3D para mapa de bloques
+// ============================================================================
+
+// Create 3D block matrix
+BlockMatrix3D* create_block_matrix_3d(int width, int height, int depth, int chunkSize) {
+    BlockMatrix3D* matrix = (BlockMatrix3D*)safe_malloc(sizeof(BlockMatrix3D));
+    if (!matrix) return NULL;
+    
+    matrix->width = width;
+    matrix->height = height;
+    matrix->depth = depth;
+    matrix->chunkSize = chunkSize;
+    matrix->isInitialized = FALSE;
+    
+    // Allocate 3D array
+    matrix->blocks = (int***)safe_malloc(width * sizeof(int**));
+    if (!matrix->blocks) {
+        safe_free(matrix);
+        return NULL;
+    }
+    
+    for (int x = 0; x < width; x++) {
+        matrix->blocks[x] = (int**)safe_malloc(height * sizeof(int*));
+        if (!matrix->blocks[x]) {
+            // Cleanup on failure
+            for (int i = 0; i < x; i++) {
+                safe_free(matrix->blocks[i]);
+            }
+            safe_free(matrix->blocks);
+            safe_free(matrix);
+            return NULL;
+        }
+        
+        for (int y = 0; y < height; y++) {
+            matrix->blocks[x][y] = (int*)safe_calloc(depth, sizeof(int));
+            if (!matrix->blocks[x][y]) {
+                // Cleanup on failure
+                for (int i = 0; i < x; i++) {
+                    for (int j = 0; j < height; j++) {
+                        safe_free(matrix->blocks[i][j]);
+                    }
+                    safe_free(matrix->blocks[i]);
+                }
+                safe_free(matrix->blocks);
+                safe_free(matrix);
+                return NULL;
+            }
+        }
+    }
+    
+    // Initialize all blocks to air
+    for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
+            for (int z = 0; z < depth; z++) {
+                matrix->blocks[x][y][z] = VOXEL_AIR;
+            }
+        }
+    }
+    
+    matrix->isInitialized = TRUE;
+    printf("BlockMatrix3D creada: %dx%dx%d (chunk size: %d)\n", width, height, depth, chunkSize);
+    return matrix;
+}
+
+// Destroy 3D block matrix
+void destroy_block_matrix_3d(BlockMatrix3D* matrix) {
+    if (!matrix) return;
+    
+    if (matrix->blocks) {
+        for (int x = 0; x < matrix->width; x++) {
+            if (matrix->blocks[x]) {
+                for (int y = 0; y < matrix->height; y++) {
+                    safe_free(matrix->blocks[x][y]);
+                }
+                safe_free(matrix->blocks[x]);
+            }
+        }
+        safe_free(matrix->blocks);
+    }
+    
+    safe_free(matrix);
+    printf("BlockMatrix3D destruida\n");
+}
+
+// Get block type at position
+int get_block_at(BlockMatrix3D* matrix, int x, int y, int z) {
+    if (!matrix || !matrix->isInitialized || !is_valid_position(matrix, x, y, z)) {
+        return VOXEL_AIR; // Default to air if invalid
+    }
+    
+    return matrix->blocks[x][y][z];
+}
+
+// Set block type at position
+void set_block_at(BlockMatrix3D* matrix, int x, int y, int z, int blockType) {
+    if (!matrix || !matrix->isInitialized || !is_valid_position(matrix, x, y, z)) {
+        printf("Error: Invalid position (%d,%d,%d) or matrix not initialized\n", x, y, z);
+        return;
+    }
+    
+    matrix->blocks[x][y][z] = blockType;
+    printf("Block set at (%d,%d,%d) = %d\n", x, y, z, blockType);
+}
+
+// Check if position is valid
+BOOL is_valid_position(BlockMatrix3D* matrix, int x, int y, int z) {
+    if (!matrix || !matrix->isInitialized) return FALSE;
+    
+    return (x >= 0 && x < matrix->width &&
+            y >= 0 && y < matrix->height &&
+            z >= 0 && z < matrix->depth);
+}
+
+// Check if block type is solid
+BOOL is_solid_block(int blockType) {
+    // All blocks except air, water, and lava are solid
+    return (blockType != VOXEL_AIR && 
+            blockType != VOXEL_WATER && 
+            blockType != VOXEL_LAVA);
+}
+
+// Render terrain from matrix (simplified version)
+void render_terrain_from_matrix(BlockMatrix3D* matrix, int startX, int startY, int startZ, int endX, int endY, int endZ) {
+    if (!matrix || !matrix->isInitialized) return;
+    
+    printf("Rendering terrain from matrix: (%d,%d,%d) to (%d,%d,%d)\n", 
+           startX, startY, startZ, endX, endY, endZ);
+    
+    // Clamp coordinates to valid range
+    startX = (startX < 0) ? 0 : startX;
+    startY = (startY < 0) ? 0 : startY;
+    startZ = (startZ < 0) ? 0 : startZ;
+    endX = (endX >= matrix->width) ? matrix->width - 1 : endX;
+    endY = (endY >= matrix->height) ? matrix->height - 1 : endY;
+    endZ = (endZ >= matrix->depth) ? matrix->depth - 1 : endZ;
+    
+    // Render blocks in the specified range
+    for (int x = startX; x <= endX; x++) {
+        for (int y = startY; y <= endY; y++) {
+            for (int z = startZ; z <= endZ; z++) {
+                int blockType = matrix->blocks[x][y][z];
+                if (blockType != VOXEL_AIR) {
+                    // Here you would call the actual rendering function
+                    // For now, just log the block
+                    printf("Rendering block at (%d,%d,%d) = %d\n", x, y, z, blockType);
+                }
+            }
+        }
+    }
+}
+
+// Regenerate terrain below a position (for surface block breaking)
+void regenerate_terrain_below(BlockMatrix3D* matrix, int x, int y, int z) {
+    if (!matrix || !matrix->isInitialized || !is_valid_position(matrix, x, y, z)) {
+        return;
+    }
+    
+    printf("Regenerating terrain below (%d,%d,%d)\n", x, y, z);
+    
+    // Check if this is a surface block (no solid blocks above)
+    BOOL isSurface = TRUE;
+    for (int checkZ = z + 1; checkZ < matrix->depth; checkZ++) {
+        if (is_solid_block(matrix->blocks[x][y][checkZ])) {
+            isSurface = FALSE;
+            break;
+        }
+    }
+    
+    if (isSurface) {
+        // Regenerate terrain below this position
+        for (int newZ = z - 1; newZ >= 0; newZ--) {
+            if (matrix->blocks[x][y][newZ] == VOXEL_AIR) {
+                // Fill with appropriate terrain based on depth
+                if (newZ >= 12) {
+                    matrix->blocks[x][y][newZ] = VOXEL_GRASS; // Surface layer
+                } else if (newZ >= 8) {
+                    matrix->blocks[x][y][newZ] = VOXEL_DIRT;  // Dirt layer
+                } else if (newZ >= 4) {
+                    matrix->blocks[x][y][newZ] = VOXEL_STONE; // Stone layer
+                } else {
+                    matrix->blocks[x][y][newZ] = VOXEL_COAL;  // Deep layer
+                }
+            }
+        }
+        
+        printf("Terrain regenerated below surface block\n");
+    }
+}
+
+// ============================================================================
 // TREE GENERATION SYSTEM
 // ============================================================================
 
@@ -809,13 +1148,14 @@ static int tree_random(int* seed) {
 TreeGenerator create_tree_generator(int seed) {
     TreeGenerator generator;
     generator.seed = seed;
-    generator.treeDensity = 0.015f; // 1.5% chance per chunk (aún menos denso)
-    generator.minHeight = 6; // Altura mínima de 6 bloques (más altos)
-    generator.maxHeight = 12; // Altura máxima de 12 bloques (más altos)
-    generator.minLeafRadius = 3; // Hojas más grandes
-    generator.maxLeafRadius = 5; // Hojas más grandes
-    printf("Tree generator creado con seed: %d, densidad: %.2f, altura: %d-%d\n", 
-           seed, generator.treeDensity, generator.minHeight, generator.maxHeight);
+    generator.treeDensity = 0.02f; // 2% chance per chunk
+    generator.minHeight = 4; // Altura mínima de 4 bloques (cabe en chunk)
+    generator.maxHeight = 8; // Altura máxima de 8 bloques (cabe en chunk)
+    generator.minLeafRadius = 2; // Hojas más pequeñas para caber
+    generator.maxLeafRadius = 3; // Hojas más pequeñas para caber
+    printf("Tree generator creado con seed: %d, densidad: %.2f, altura: %d-%d, hojas: %d-%d\n", 
+           seed, generator.treeDensity, generator.minHeight, generator.maxHeight, 
+           generator.minLeafRadius, generator.maxLeafRadius);
     return generator;
 }
 
@@ -910,7 +1250,42 @@ Tree generate_tree_at_position(int x, int y, int z, TreeGenerator* generator) {
     return tree;
 }
 
-// Place a tree in a chunk - ÁRBOLES 3D CON FORMA DE CONO
+// Check if a tree can fit completely within a chunk
+BOOL can_tree_fit_in_chunk(Tree* tree, VoxelChunk* chunk) {
+    if (!tree || !chunk) return FALSE;
+    
+    // Verificar que el tronco cabe
+    int trunkEndX = tree->x + tree->trunkWidth - 1;
+    int trunkEndY = tree->y + tree->trunkWidth - 1;
+    int trunkEndZ = tree->z + tree->height - 1;
+    
+    if (trunkEndX >= 16 || trunkEndY >= 16 || trunkEndZ >= 16) {
+        return FALSE; // Tronco se sale del chunk
+    }
+    
+    // Verificar que las hojas caben
+    int leafStartZ = tree->z + tree->height - 2; // Hojas empiezan antes del final del tronco
+    int leafEndZ = leafStartZ + tree->leafHeight - 1;
+    
+    if (leafEndZ >= 16) {
+        return FALSE; // Hojas se salen del chunk por arriba
+    }
+    
+    // Verificar que las hojas no se salen por los lados
+    int leafMaxRadius = tree->leafRadius;
+    int leafMinX = tree->x - leafMaxRadius;
+    int leafMaxX = tree->x + leafMaxRadius;
+    int leafMinY = tree->y - leafMaxRadius;
+    int leafMaxY = tree->y + leafMaxRadius;
+    
+    if (leafMinX < 0 || leafMaxX >= 16 || leafMinY < 0 || leafMaxY >= 16) {
+        return FALSE; // Hojas se salen del chunk por los lados
+    }
+    
+    return TRUE; // El árbol cabe completamente en el chunk
+}
+
+// Place a tree in a chunk - ÁRBOLES CON DIMENSIONES EXACTAS DE BLOQUES
 void place_tree_in_chunk(VoxelChunk* chunk, Tree* tree) {
     if (!chunk || !tree) return;
     
@@ -923,68 +1298,81 @@ void place_tree_in_chunk(VoxelChunk* chunk, Tree* tree) {
     
     if (!woodBlueprint || !leavesBlueprint) return;
     
-    // Place trunk - VARIABLE HEIGHT (6-12 BLOQUES) HACIA ARRIBA DESDE Z=0
+    // Calcular posición del árbol en el mundo
+    int worldTreeX = chunk->chunkX * 16 + tree->x;
+    int worldTreeY = chunk->chunkY * 16 + tree->y;
+    int worldTreeZ = chunk->chunkZ * 16 + tree->z;
+    
+    printf("Colocando árbol en mundo (%d,%d,%d) chunk (%d,%d,%d) local (%d,%d,%d)\n",
+           worldTreeX, worldTreeY, worldTreeZ, chunk->chunkX, chunk->chunkY, chunk->chunkZ, tree->x, tree->y, tree->z);
+    
+    // Place trunk - DIMENSIONES EXACTAS (1x1 o 2x2 bloques)
     for (int h = 0; h < tree->height; h++) {
-        int trunkZ = 0 + h; // Start from ground level (z=0)
-        if (trunkZ >= 16) break; // Don't exceed chunk bounds
+        int trunkZ = tree->z + h; // Start from tree base
         
-        // Place trunk blocks (1x1 o 2x2 dependiendo del ancho)
-        for (int tx = 0; tx < tree->trunkWidth; tx++) {
-            for (int ty = 0; ty < tree->trunkWidth; ty++) {
-                int blockX = tree->x + tx;
-                int blockY = tree->y + ty;
-                
-                // Check bounds
-                if (blockX >= 0 && blockX < 16 && blockY >= 0 && blockY < 16) {
-                    VoxelBlock* block = &chunk->blocks[blockX][blockY][trunkZ];
-                    initialize_block_from_blueprint(block, woodBlueprint);
+        // Solo colocar tronco si está dentro del chunk actual
+        if (trunkZ >= 0 && trunkZ < 16) {
+            // Place trunk blocks con dimensiones exactas
+            for (int tx = 0; tx < tree->trunkWidth; tx++) {
+                for (int ty = 0; ty < tree->trunkWidth; ty++) {
+                    int blockX = tree->x + tx;
+                    int blockY = tree->y + ty;
+                    
+                    // Check bounds del chunk
+                    if (blockX >= 0 && blockX < 16 && blockY >= 0 && blockY < 16) {
+                        VoxelBlock* block = &chunk->blocks[blockX][blockY][trunkZ];
+                        if (block->type == VOXEL_AIR || block->type == VOXEL_GRASS) {
+                            initialize_block_from_blueprint(block, woodBlueprint);
+                        }
+                    }
                 }
             }
         }
     }
     
-    // Place leaves - FORMA DESORDENADA Y ORGÁNICA DESDE LA PUNTA DEL ÁRBOL
-    int trunkTopZ = 0 + tree->height - 1; // Top of trunk
-    int leafStartZ = trunkTopZ; // Start leaves from trunk top
+    // Place leaves - FORMA ESFÉRICA COMPACTA CON DIMENSIONES EXACTAS
+    int trunkTopZ = tree->z + tree->height - 1;
+    int leafStartZ = trunkTopZ - 1; // Empezar hojas un poco antes del final del tronco
     
-    // Usar seed para crear variación en las hojas
-    int leafSeed = 12345 + tree->x * 1000 + tree->y * 100 + tree->z;
+    // Usar seed para crear variación consistente en las hojas
+    int leafSeed = 12345 + worldTreeX * 1000 + worldTreeY * 100 + worldTreeZ;
     
+    // Colocar hojas en forma de esfera compacta
     for (int lz = 0; lz < tree->leafHeight; lz++) {
         int currentZ = leafStartZ + lz;
-        if (currentZ >= 16) break;
         
-        // Calcular radio variable para cada nivel (forma más orgánica)
-        float levelProgress = (float)lz / (float)tree->leafHeight;
-        int currentRadius = (int)(tree->leafRadius * (1.0f - levelProgress * 0.3f)); // Radio decrece hacia arriba
-        
-        // Place leaves in a more organic, irregular pattern
-        for (int lx = -currentRadius; lx <= currentRadius; lx++) {
-            for (int ly = -currentRadius; ly <= currentRadius; ly++) {
-                int blockX = tree->x + lx;
-                int blockY = tree->y + ly;
-                
-                // Check bounds
-                if (blockX >= 0 && blockX < 16 && blockY >= 0 && blockY < 16) {
-                    // Distancia circular básica
-                    float distance = sqrtf(lx*lx + ly*ly);
+        // Solo procesar si está dentro del chunk actual
+        if (currentZ >= 0 && currentZ < 16) {
+            // Calcular radio para este nivel (forma esférica)
+            float levelProgress = (float)lz / (float)(tree->leafHeight - 1);
+            float sphereRadius = tree->leafRadius * sinf(levelProgress * 3.14159f); // Esfera perfecta
+            
+            // Colocar hojas en patrón cuadrado para dimensiones exactas
+            int radius = (int)sphereRadius;
+            if (radius < 1) radius = 1; // Mínimo 1 bloque de radio
+            
+            for (int lx = -radius; lx <= radius; lx++) {
+                for (int ly = -radius; ly <= radius; ly++) {
+                    int blockX = tree->x + lx;
+                    int blockY = tree->y + ly;
                     
-                    // Agregar irregularidad usando ruido simple
-                    int noiseSeed = leafSeed + lx * 100 + ly * 10 + lz;
-                    int noiseValue = tree_random(&noiseSeed);
-                    float noise = (float)(noiseValue % 1000) / 1000.0f - 0.5f; // -0.5 a 0.5
-                    
-                    // Aplicar irregularidad a la distancia
-                    float irregularDistance = distance + noise * 0.8f;
-                    
-                    // Condición más flexible para formas orgánicas
-                    if (irregularDistance <= currentRadius + 0.5f) {
-                        // Agregar más aleatoriedad para formas desordenadas
-                        int randomChance = tree_random(&noiseSeed) % 100;
-                        if (randomChance < 95) { // 95% de chance de colocar hoja (aumentado)
-                            VoxelBlock* block = &chunk->blocks[blockX][blockY][currentZ];
-                            if (block->type == VOXEL_AIR) { // Only place leaves in air
-                                initialize_block_from_blueprint(block, leavesBlueprint);
+                    // Check bounds del chunk
+                    if (blockX >= 0 && blockX < 16 && blockY >= 0 && blockY < 16) {
+                        // Distancia desde el centro del tronco
+                        float distance = sqrtf(lx*lx + ly*ly);
+                        
+                        // Solo colocar si está dentro del radio esférico
+                        if (distance <= sphereRadius + 0.5f) {
+                            // Agregar pequeña variación orgánica
+                            int noiseSeed = leafSeed + lx * 100 + ly * 10 + lz;
+                            int randomChance = tree_random(&noiseSeed) % 100;
+                            
+                            // 90% de chance de colocar hoja (más compacto)
+                            if (randomChance < 90) {
+                                VoxelBlock* block = &chunk->blocks[blockX][blockY][currentZ];
+                                if (block->type == VOXEL_AIR) {
+                                    initialize_block_from_blueprint(block, leavesBlueprint);
+                                }
                             }
                         }
                     }
@@ -993,6 +1381,6 @@ void place_tree_in_chunk(VoxelChunk* chunk, Tree* tree) {
         }
     }
     
-    printf("Árbol con forma de media esfera colocado en chunk (%d,%d,%d): altura=%d, hojas_altura=%d\n", 
-           chunk->chunkX, chunk->chunkY, chunk->chunkZ, tree->height, tree->leafHeight);
+    printf("Árbol colocado: altura=%d, tronco=%dx%d, hojas_radio=%d, hojas_altura=%d\n", 
+           tree->height, tree->trunkWidth, tree->trunkWidth, tree->leafRadius, tree->leafHeight);
 }

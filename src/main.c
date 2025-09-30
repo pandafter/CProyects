@@ -1,3 +1,4 @@
+#include "world/chunk_system.h"  // Must be included before renderer.h
 #include "graphics/window.h"
 #include "core/memory.h"
 #include <stdio.h>

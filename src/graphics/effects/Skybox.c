@@ -58,6 +58,8 @@ static PFNGLDELETEBUFFERSPROC glDeleteBuffers = NULL;
 
 // Initialize OpenGL function pointers
 static BOOL init_opengl_functions() {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wcast-function-type"
     glCreateShader = (PFNGLCREATESHADERPROC)wglGetProcAddress("glCreateShader");
     glCreateProgram = (PFNGLCREATEPROGRAMPROC)wglGetProcAddress("glCreateProgram");
     glShaderSource = (PFNGLSHADERSOURCEPROC)wglGetProcAddress("glShaderSource");
@@ -85,6 +87,7 @@ static BOOL init_opengl_functions() {
     glUniform1i = (PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i");
     glDeleteVertexArrays = (PFNGLDELETEVERTEXARRAYSPROC)wglGetProcAddress("glDeleteVertexArrays");
     glDeleteBuffers = (PFNGLDELETEBUFFERSPROC)wglGetProcAddress("glDeleteBuffers");
+#pragma GCC diagnostic pop
     
     return (glCreateShader && glCreateProgram && glShaderSource && glCompileShader &&
             glGetShaderiv && glGetShaderInfoLog && glAttachShader && glLinkProgram &&
@@ -188,27 +191,37 @@ void Skybox_Init(Skybox* sb) {
         "void main(){\n"
         "  vec3 d = normalize(vDir);\n"
         "  \n"
-        "  // Procedural sky colors for realistic sunny day\n"
+        "  // MEJORADO: Producto punto para iluminación del cielo\n"
         "  float sunDot = max(dot(d, -uSunDir), 0.0);\n"
         "  \n"
-        "  // Realistic sky gradient (bright blue to white)\n"
-        "  vec3 skyColor = mix(vec3(0.4, 0.6, 1.0), vec3(0.8, 0.9, 1.0), d.y * 0.7 + 0.3);\n"
+        "  // Base sky color con gradiente vertical mejorado\n"
+        "  vec3 skyColor = mix(vec3(0.2, 0.4, 0.8), vec3(0.6, 0.8, 1.0), d.y * 0.8 + 0.2);\n"
         "  \n"
-        "  // Sun disk with realistic glow\n"
-        "  if (sunDot > 0.995) {\n"
-        "    float sunIntensity = (sunDot - 0.995) * 200.0;\n"
-        "    skyColor = mix(skyColor, vec3(1.0, 0.95, 0.8), sunIntensity);\n"
+        "  // MEJORADO: Iluminación del sol con producto punto\n"
+        "  vec3 sunColor = vec3(1.0, 0.9, 0.7);\n"
+        "  float sunInfluence = pow(sunDot, 0.5);\n"
+        "  skyColor = mix(skyColor, sunColor, sunInfluence * 0.6);\n"
+        "  \n"
+        "  // Disco del sol con brillo intenso\n"
+        "  if (sunDot > 0.998) {\n"
+        "    float sunIntensity = (sunDot - 0.998) * 500.0;\n"
+        "    skyColor = mix(skyColor, vec3(1.0, 1.0, 0.9), sunIntensity);\n"
         "  }\n"
         "  \n"
-        "  // Sun corona effect\n"
-        "  if (sunDot > 0.98) {\n"
-        "    float coronaIntensity = (sunDot - 0.98) * 50.0;\n"
-        "    skyColor = mix(skyColor, vec3(1.0, 0.9, 0.7), coronaIntensity * 0.3);\n"
+        "  // Corona del sol mejorada\n"
+        "  if (sunDot > 0.95) {\n"
+        "    float coronaIntensity = (sunDot - 0.95) * 20.0;\n"
+        "    skyColor = mix(skyColor, vec3(1.0, 0.8, 0.6), coronaIntensity * 0.4);\n"
         "  }\n"
         "  \n"
-        "  // Atmospheric perspective (darker at horizon)\n"
+        "  // MEJORADO: Perspectiva atmosférica con producto punto\n"
         "  float horizonFade = 1.0 - abs(d.y);\n"
-        "  skyColor = mix(skyColor, vec3(0.3, 0.5, 0.8), horizonFade * 0.2);\n"
+        "  vec3 horizonColor = vec3(0.4, 0.6, 0.9);\n"
+        "  skyColor = mix(skyColor, horizonColor, horizonFade * 0.3);\n"
+        "  \n"
+        "  // MEJORADO: Iluminación general del cielo\n"
+        "  float skyBrightness = 0.3 + 0.7 * max(d.y, 0.0);\n"
+        "  skyColor *= skyBrightness;\n"
         "  \n"
         "  gl_FragColor = vec4(skyColor, 1.0);\n"
         "}\n";
@@ -246,7 +259,7 @@ void Skybox_Draw(Skybox* sb, int w, int h, const float* view, const float* proj)
     
     if (locV >= 0) glUniformMatrix4fv(locV, 1, GL_FALSE, view);
     if (locP >= 0) glUniformMatrix4fv(locP, 1, GL_FALSE, proj);
-    if (locS >= 0) glUniform3f(locS, 0.0, -1.0, 0.0); // Sun direction
+    if (locS >= 0) glUniform3f(locS, 0.0, -1.0, 0.0); // Sun direction (from above)
     
     // Draw skybox
     if (sb->vao && glBindVertexArray) {

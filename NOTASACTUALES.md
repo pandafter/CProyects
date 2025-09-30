@@ -6,5 +6,4 @@ Arreglar luces
 
 Agregar romper bloque
 Agregar poner bloque
-Agregar rendewrizar en cruz al romper hacia abajo
-
+Agregar rendewrizar en cruz al romper hacia abajoad
